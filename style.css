@@ -196,7 +196,6 @@
   font-size: 30px;
   width: 320px;
   height: 115px;
-  left: 4.44089e-16px;
   text-align: center;
 }
 
@@ -252,8 +251,8 @@
 #divApplab.appModern #cheat {
   height: 50px;
   width: 40px;
-  color: rgb(245, 0, 0);
-  background-color: rgb(188, 26, 26);
+  color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0);
   left: 280px;
 }
 
@@ -337,7 +336,7 @@
   color: rgb(255, 255, 255);
   width: 320px;
   height: 110px;
-  top: 295px;
+  top: 320px;
   font-size: 25px;
 }
 
@@ -390,10 +389,17 @@
   background-color: rgba(0, 0, 0, 0.57);
 }
 
+#divApplab.appModern #inputTime {
+  width: 195px;
+  height: 40px;
+  top: 385px;
+  font-size: 19px;
+}
+
 #divApplab.appModern #screenTrans {
-  display: none;
   background-size: 320px 450px;
   background-image: url("https://studio.code.org/media?u=http%3A%2F%2Ffarm4.static.flickr.com%2F3196%2F2972853242_ace16bbe48.jpg");
+  display: none;
 }
 
 #divApplab.appModern #imageTrans {

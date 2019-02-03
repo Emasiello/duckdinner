@@ -1,4 +1,18 @@
+var gametime;
+var input;
+onEvent("inputTime", "input", function() {
+  console.log("inputTime current text: " + getText("inputTime"));
+  input = getText("inputTime");
+  if (input > 10) {
+    input = 10;
+  }
+  console.log(input);
+  gametime = input * 60000;
+  console.log(gametime);
+});
 var score = 0;
+var repeat = 0;
+var screenClick = 0;
 var child1 = randomNumber(0, 10);
 var child2 = randomNumber(0, 10);
 if (child1 < 10) {
@@ -14,7 +28,7 @@ if (child1 < 2) {
 } else if (child1 < 5) {
   var kid1 = "Elly";
 } else if (child1 < 6) {
-  var kid1 = "Fabiana";
+  var kid1 = "Fabian";
 } else if (child1 < 7) {
   var kid1 = "Gabriel";
 } else if (child1 < 8) {
@@ -35,7 +49,7 @@ if (child1 < 1) {
 } else if (child2 < 5) {
   var kid2 = "Eddie";
 } else if (child2 < 6) {
-  var kid2 = "Frankie";
+  var kid2 = "Frank";
 } else if (child2 < 7) {
   var kid2 = "Glenn";
 } else if (child2 < 8) {
@@ -47,79 +61,32 @@ if (child1 < 1) {
 } else {
   var kid2 = "Karter";
 }
-onEvent("cheat", "click", function(){
-  score= score + 10;
-  console.log("cheat");
+onEvent("screenTitle", "click", function(){
+  setScreen("screenIntro");
+  hideElement("textIntro");
+  setTimeout(showText, 550);
 });
+function delay() {
+  onEvent("screenTrans", "click", function(){
+  change(); });
+}
 onEvent("buttonStart", "click", function() {
   console.log("buttonStart clicked!");
   setScreen("screenDuck");
   setPosition("imageDuck1", 100, 250, 80, 100);
   setPosition("imageDuck2", 150, 250, 80, 100);
   textLabel("score", score);
-  fly();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  flypattern();
-  setTimeout(trans, 9900);
-  console.log("time");
+  duckfull();
+});
+onEvent("cheat", "click", function(){
+  score= score + 10;
+  deleteElement("score");
+  textLabel("score", score);
+  console.log("cheat");
 });
 onEvent("imageDuck1", "click", function() {
   console.log("imageDuck1 clicked!");
-  setPosition("imageDuck1", 400, 83, 100, 80);
+  setPosition("imageDuck1", randomNumber(0, 320), randomNumber(0, 449), 80, 100);
   score = score + 1;
   deleteElement("score");
   textLabel("score", score);
@@ -127,11 +94,20 @@ onEvent("imageDuck1", "click", function() {
 });
 onEvent("imageDuck2", "click", function() {
   console.log("imageDuck2 clicked!");
-  setPosition("imageDuck2", 400, 170, 100, 80);
+  setPosition("imageDuck2", randomNumber(0, 320), randomNumber(0, 449), 80, 100);
   score = score + 1;
   deleteElement("score");
   textLabel("score", score);
   console.log("score");
+});
+
+onEvent("buttonRetry", "click", function(){
+  setScreen("screenIntro");
+  screenClick = 1;
+  deleteElement("score");
+});
+onEvent("buttonEnd", "click", function(){
+  gameend();
 });
 onEvent("imageDog1", "click", function() {
   console.log("imageDog1 clicked!");
@@ -149,16 +125,22 @@ onEvent("imageDog2", "click", function() {
   textLabel("score", score);
   console.log("score");
 });
+onEvent("buttonReset", "click", function() {
+  console.log("buttonReset clicked!");
+  setScreen("screenIntro");
+  screenClick = 1;
+  deleteElement("score");
+  deleteElement("days");
+  deleteElement("finalscore");
+  score = 0;
+  });
 function fly() {
   setPosition("imageDuck1", randomNumber(0, 320), randomNumber(0, 449), 80, 100);
   setPosition("imageDuck2", randomNumber(0, 320), randomNumber(0, 449), 80, 100);
 }
 function flypattern() {
-  setTimeout(fly,randomNumber(1999, 19999));
-  fly();
+  setTimeout(fly,randomNumber(2999, 6999));
   console.log("moved");
-  setTimeout(fly,randomNumber(1999, 19999));
-  fly();
 }
 function change() {
   console.log("change");
@@ -174,18 +156,6 @@ function change() {
   setScreen("screenloss");
 }
 }
-onEvent("buttonRetry", "click", function(){
-  setScreen("screenStart");
-  deleteElement("score");
-});
-onEvent("buttonReset", "click", function() {
-  console.log("buttonReset clicked!");
-  setScreen("screenStart");
-  deleteElement("score");
-  deleteElement("days");
-  deleteElement("finalscore");
-  score = 0;
-  });
 function dogrun() {
   setTimeout(run,randomNumber(2999, 6999));
   console.log("dog move");
@@ -195,127 +165,60 @@ function run() {
   setPosition("imageDog2", randomNumber(0,320), 350, 100, 100);
 }
 function dogfull() {
+  for (repeat = 0; repeat < 100; repeat++) {
   dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
-  dogrun();
+  }
   setTimeout(gameend, 6500);
   console.log("dog end");
+}
+function duckfull() {
+  for (var i = 0; i < 100; i++) {
+  flypattern();
+  console.log("duck move");
+  }
+  setTimeout(trans, 6500);
+  console.log("duck end");
 }
 function gameend() {
   var days = score * 1.5;
   setScreen("screenWin");
   textLabel("finalscore", score);
-  setPosition("finalscore", 160, 100, 300, 300);
+  setStyle("finalscore", "font-size: 35px; color: rgb(255, 255, 255, 1); text-align: center;");
+  setPosition("finalscore", 0, 100, 320, 50);
   textLabel("days", days);
-  setPosition("days", 160, 370, 300, 300);
+  setStyle("days", "font-size: 35px; color: rgb(255, 255, 255, 1);  text-align: center;");
+  setPosition("days", 0, 355, 320, 50);
 }
-onEvent("screenTitle", "click", function(){
-  setScreen("screenIntro");
-  hideElement("textIntro");
-  setTimeout(showText, 550);
-  
-});
 function showText() {
   showElement("textIntro");
-  textLabel("kid1", kid1);
-  setPosition("kid1", 85, 170, 100, 100);
-  textLabel("kid2", kid2);
-  setPosition("kid2", 195, 170, 100, 100);
+  textLabel("intro", "Help! " + kid1 + " and " + kid2 + " are very hungry. We need to go duck hunting to gather more food.");
+  setStyle("intro", "font-size: 19px; color: rgb(0, 0, 0, 1);");
+  setPosition("intro", 25, 165, 285, 115);
 }
-onEvent("buttonEnd", "click", function(){
-  gameend();
-});
 onEvent("screenIntro", "click", function(){
+  if (screenClick > 1){ 
   setScreen("screenStart");
-  deleteElement("kid1");
-  deleteElement("kid2");
+} else if (screenClick == 1) {
+  screenClick ++;
+} else {
+  deleteElement("intro");
+  textLabel("hours", "How many hours should we hunt for");
+  setStyle("hours", "font-size: 19px; color: rgb(0, 0, 0, 1);");
+  setPosition("hours", 25, 165, 285, 115);
+  showElement("inputTime");
+  screenClick ++;
+}
 });
 function trans() {
+  if (score > 2){
   hideElement("textTrans");
   setScreen("screenTrans");
   setTimeout(showTrans, 550);
+  } else {
+    setScreen("screenloss");
+  }
 }
 function showTrans() {
   showElement("textTrans");
-  setTimeout( delay, 550);
-}
-function delay() {
-  onEvent("screenTrans", "click", function(){
-  change(); });
+  setTimeout(delay, 550);
 }
